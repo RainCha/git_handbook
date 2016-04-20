@@ -82,6 +82,13 @@ git merge dev            合并指定分支到当前分支
 git branch -d dev        合并完成后，就可以放心地删除dev分支了
 ```
 
+#### 创建本地分支develop后,推送至远程，并添加远程develop
+```
+git branch -d develop 
+git push --set-upstream origin develop
+```
+
+
 #### 当两个分支都对同一文件作了修改，合并分支时就会产生冲突，需要进入到文件修改冲突部分，再次add&&commit
 ###### 使用下列命令查看分支的合并情况
 git log --graph --pretty=oneline --abbrev-commit
