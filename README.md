@@ -1,7 +1,10 @@
 # Git速查手册
 ------
 ##  初始化git 仓库
-git init
+
+```
+    git init
+```
 
 ## 把文件修改添加到暂存区
 git add test.txt test2.txt
@@ -47,16 +50,21 @@ git config --global user.email "xxxx@gmail.com"
 ## 创建SSH key
 ssh-keygen -t rsa -C "youremail@example.com"
 
-## 关联本地库和github远程仓库
-git remote add origin git@github.com:example/learngit.git
+-------
 
-#### 把本地库的所有内容推送到远程库上(第一次推送，加上了-u参数)
+## 关联本地库和github远程仓库
+ git remote add origin git@github.com:example/learngit.git
+
+`第一次使用加上了-u参数，是推送内容并关联分支推送成功后就可以看到远程和本地的内容一模一样`
 git push -u origin master
-#### 把每一次提交都推送到远程库上
+
+`下次只要本地作了提交，就可以通过命令：`
 git push origin master
 
 ## 先创建远程库，然后，从远程库克隆。
 git clone git@github.com:example/test.git
+
+---------
 
 ## 创建分支
 git branch dev 创建分支dev
