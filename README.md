@@ -40,6 +40,10 @@ git commit -m "remove test.txt"
 
 git checkout -- test.txt
 
+##  配置git用户名
+git config --global user.name "xxx"
+git config --global user.email "xxxx@gmail.com"
+
 ## 创建SSH key
 ssh-keygen -t rsa -C "youremail@example.com"
 
