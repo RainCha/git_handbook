@@ -7,7 +7,7 @@ git init
 git add test.txt test2.txt
 
 ## 把暂存区的所有内容提交到当前分支。
-git commit -m '�����������ļ�'
+git commit -m '添加了两个文件'
 
 ## 修改文件后，查看状态
 git status
@@ -26,103 +26,108 @@ git reset --hard commit_id
 ## 要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
 git reflog
 
-## �����޸�
-#### ���԰��ݴ������޸ĳ�������unstage�������·Żع�������(git add������Ҫ����)
+## 撤销修改
+#### 可以把暂存区的修改撤销掉（unstage），重新放回工作区。(git add后，想要撤销)
 git reset HEAD test.txt
-#### ���Զ������������޸�
+#### 可以丢弃工作区的修改
 git checkout -- test.txt
 
-## ɾ���ļ����ڹ�����ɾ����һ���ļ�����
-#### �Ӱ汾����ɾ�����ļ����Ǿ�������git rmɾ��������git commit��
+## 删除文件（在工作区删除了一个文件后）
+#### 版本库中删除该文件，那就用命令git rm删掉，并且git commit：
 git rm test.txt
 git commit -m "remove test.txt"
-#### ɾ���˹��������ļ����汾���ﻹ�У�����Ҫ����ɾ���ļ��ָ������°汾��
+#### 删错了工作区的文件，版本库里还有，所以要把误删的文件恢复到最新版本：
+
 git checkout -- test.txt
 
-## ����SSH key
+## 创建SSH key
 ssh-keygen -t rsa -C "youremail@example.com"
 
-## �������ؿ���githubԶ�ֿ̲�
+## 关联本地库和github远程仓库
 git remote add origin git@github.com:example/learngit.git
 
-## �ѱ��ؿ��������������͵�Զ�̿���(��һ�����ͣ�������-u����)
+#### 把本地库的所有内容推送到远程库上(第一次推送，加上了-u参数)
 git push -u origin master
-
-## ��ÿһ���ύ�����͵�Զ�̿���
+#### 把每一次提交都推送到远程库上
 git push origin master
 
-## �ȴ���Զ�̿⣬Ȼ�󣬴�Զ�̿���¡��
+## 先创建远程库，然后，从远程库克隆。
 git clone git@github.com:example/test.git
 
-## ������֧
-git branch dev         ������֧dev
-git branch             �г����з�֧����ǰ��֧ǰ������һ��*��
-git checkout dev       �л���dev��֧
-git checkout -b dev    �������л���dev��֧
+## 创建分支
+git branch dev 创建分支dev
+git branch 列出所有分支，当前分支前面会标一个*号
+git checkout dev 切换到dev分支
+git checkout -b dev 创建并切换到dev分支
 
-## �ϲ���֧
-#### ��dev��֧�ϣ��޸��˴��룬����commit��֮������Ҫ�ϲ���master��֧
+## 合并分支
+在dev分支上，修改了代码，并且commit了之后，想要合并到master分支
+
 git checkout master
-git merge dev          �ϲ�ָ����֧����ǰ��֧
-git branch -d dev      �ϲ����ɺ󣬾Ϳ��Է��ĵ�ɾ��dev��֧��
+git merge dev          合并指定分支到当前分支
+git branch -d dev      合并完成后，就可以放心地删除dev分支了
 
-## ��������֧����ͬһ�ļ������޸ģ��ϲ���֧ʱ�ͻ�������ͻ����Ҫ���뵽�ļ��޸ĳ�ͻ���֣��ٴ�add&&commit
-## ʹ�����������鿴��֧�ĺϲ�����
+## 当两个分支都对同一文件作了修改，合并分支时就会产生冲突，需要进入到文件修改冲突部分，再次add&&commit
+#### 使用下列命令查看分支的合并情况
 git log --graph --pretty=oneline --abbrev-commit
 
-## �ϲ���֧ʱ��ǿ�ƽ���Fast forwardģʽ
-#### Git�ͻ���mergeʱ����һ���µ�commit���������ӷ�֧��ʷ�ϾͿ��Կ�����֧��Ϣ
+## 合并分支时，强制禁用Fast forward模式
+#### Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息
 git merge --no-ff -m "merge with no-ff" dev
 
-## ��ʱBug��֧
+## 临时Bug分支
 
 ```
-# Git���ṩ��һ��stash���ܣ����԰ѵ�ǰ�����ֳ������ء����������Ժ��ָ��ֳ�����������
+# Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
 git stash
-# ����ȷ��Ҫ���ĸ���֧���޸�bug���ٶ���Ҫ��master��֧���޸����ʹ�master������ʱ��֧
+# 首先确定要在哪个分支上修复bug，假定需要在master分支上修复，就从master创建临时分支
 git checkout master
 git checkout -b issue-101
-# �޸����ɺ����ύ
+# 修复完成后，提交
 git add readme.txt
 git commit -m "fix bug 101"
-# �л���master��֧
+# 切换到master分支
 git checkout master
 git merge --no-ff -m "merged bug fix 101" issue-101
 git branch -d issue-101
-# �л���dev��֧������δ���ɵĹ���
+# 切换到dev分支，继续未完成的工作
 git checkout dev
-# �鿴֮ǰ�Ĺ����ֳ�
+# 查看之前的工作现场
 git stash list
-# �ָ������ֳ���ͬʱ��stash����Ҳɾ�ˣ�git stash apply����ɾ��stash���ݣ�
+# 恢复工作现场的同时把stash内容也删了（git stash apply不会删除stash内容）
 git stash pop
 
-## ����stash���ָ���ʱ��������git stash list�鿴��Ȼ���ָ�ָ����stash�������
+## 多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：
 git stash apply stash@{0}
+
+
 ```
 
-## �鿴Զ�̿�����Ϣ��-v ��ϸ��Ϣ��
-git remote
-git remote -v
+## 查看远程库的信息（-v 详细信息）
+git remote git remote -v
 
-## ���ͷ�֧(�Ѹ÷�֧�ϵ����б����ύ���͵�Զ�̿�)
-git push origin dev   origin Զ�̿⣻dev Ҫ���͵ı��ط�֧
 
-## ����Զ��origin��dev��֧������
+
+## 推送分支(把该分支上的所有本地提交推送到远程库)
+git push origin dev   origin 远程库；dev 要推送的本地分支
+
+## 创建远程origin的dev分支到本地
 ```
     git checkout -b dev origin/dev
-    # ��dev�ϼ����޸ģ�Ȼ����ʱ��ʱ�ذ�dev��֧push��Զ�̣�
+    git checkout -b dev origin/dev
+    # 在dev上继续修改，然后，时不时地把dev分支push到远程：
     git commit -m "xxxxxx"
     git push origin dev
-    # ������ͬʱ��dev�ϵ��ļ��������޸ģ�commit��,push�ͻ����ֳ�ͻ����ʱ��Ӧ��ʹ��git pull�����µ��ύ��origin/devץ����
+    # 当两人同时对dev上的文件做出了修改，commit后,push就会出现冲突，此时就应该使用git pull把最新的提交从origin/dev抓下来
 
     git pull
-    # ����ʹ��git pullҲʧ���ˣ�ԭ����û��ָ������dev��֧��Զ��origin/dev��֧�����ӣ�������ʾ������dev��origin/dev������,��pull
+    # 如果使用git pull也失败了，原因是没有指定本地dev分支与远程origin/dev分支的链接，根据提示，设置dev和origin/dev的链接,再pull
     git branch --set-upstream dev origin/dev
     git pull
-    # �����г�ͻ��Ҫ�ȴ�����ͻ,��push
+    # 如果有冲突，要先处理冲突,再push
     git push origin dev
-
 ```
 
-## ������ǩ
- git tag v1.0
+###创建标签
+
+git tag v1.0
