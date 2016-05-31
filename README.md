@@ -55,8 +55,10 @@ ssh-keygen -t rsa -C "youremail@example.com"
 #### 关联本地库和github远程仓库
  git remote add origin git@github.com:example/learngit.git
 
-`第一次使用加上了-u参数，是推送内容并关联分支推送成功后就可以看到远程和本地的内容一模一样`
+`第一次使用加上了-u参数，是推送内容并关联分支推送成功后就可以看到远程和本地的内容一模一样,在此之前一定要git add和git commit ,否则会报错`
+```
 git push -u origin master
+```
 
 `下次只要本地作了提交，就可以通过命令：`
 git push origin master
