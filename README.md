@@ -163,3 +163,14 @@ git push origin dev
 
 #####创建标签
 git tag v1.0
+
+##### 回退版本
+```
+git revert HEAD                 # 撤销前一次 commit
+git revert HEAD^                # 撤销前前一次 commit
+git revert commit     #（比如：fa042ce57ebbe5bb9c8db709f719cec2c58ee7ff）撤销指定的版本，撤销也会作为一次提交进行保存。
+
+git reset commit    #（比如：fa042ce57ebbe5bb9c8db709f719cec2c58ee7ff） 回退到指定版本
+
+
+```
