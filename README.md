@@ -57,7 +57,19 @@ ssh-keygen -t rsa -C "youremail@example.com"
 
 `第一次使用加上了-u参数，是推送内容并关联分支推送成功后就可以看到远程和本地的内容一模一样,在此之前一定要git add和git commit ,否则会报错`
 ```
+git push -u origin master  
+// 如果远程仓库有文件和本地仓库不统一，上面这条命令就会出错，这是可以通过以下几种方式解决
+
+// 1. 强制提交 -- 这样会使远程的修改丢失，一般是不可取的，尤其是多人协作开发的时候。
+git push -u origin master -f 
+
+// 2. push前先将远程repository修改pull下来,然后在提交
+git pull origin master
 git push -u origin master
+
+// 3. 若不想merge远程和本地修改，可以先创建新的分支，然后push
+git branch [name]
+git push -u origin [name]
 ```
 
 `下次只要本地作了提交，就可以通过命令：`
